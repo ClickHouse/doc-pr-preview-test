@@ -24,5 +24,12 @@ jobs:
           export NODE_OPTIONS="--max_old_space_size=4096"
           vercel build --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
+        id: Deploy-Preview
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }} >> $GITHUB_OUTPUT
+      - name: Report URL
+        permissions:
+          pull-requests: write
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: $GITHUP_OUTPUT
         
