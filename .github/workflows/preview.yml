@@ -30,7 +30,7 @@ jobs:
         uses: ViktorJT/Get-vercel-preview-url@1.2.2
         with:
           vercel_access_token: ${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
-          vercel_team_id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel_team_id: ${{ secrets.VERCEL_ORG_ID }}
           gh_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Echo preview
