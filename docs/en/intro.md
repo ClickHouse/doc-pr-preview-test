@@ -5,7 +5,6 @@ description: "ClickHouse® is a column-oriented SQL database management system (
 
 # What Is ClickHouse?
 
-
 ClickHouse® is a high-performance, column-oriented SQL database management system (DBMS) for online analytical processing (OLAP). It is available as both an [open-source software](https://github.com/ClickHouse/ClickHouse) and a [cloud offering](https://clickhouse.com/cloud).
 
 
