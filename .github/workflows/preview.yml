@@ -25,5 +25,4 @@ jobs:
           vercel build --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
       - name: Deploy Project Artifacts to Vercel
         run: |
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }} >> $GITHUB_STEP_SUMMARY
