@@ -25,4 +25,13 @@ jobs:
           vercel build --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
-        
+      - name: Get Vercel Preview URL
+        id: get-vercel-preview-url
+        uses: ViktorJT/Get-vercel-preview-url@1.2.2
+        with:
+          vercel_access_token: ${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
+          vercel_team_id: ${{ secrets.VERCEL_PROJECT_ID }}
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Echo preview
+        run: echo "Preview url is ready ${{ steps.get-vercel-preview-url.outputs.preview_url }}"
