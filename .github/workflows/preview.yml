@@ -4,13 +4,6 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:  # yamllint disable-line rule:truthy
   pull_request:
-    types:
-      - synchronize
-      - reopened
-      - opened
-  push:
-    branches-ignore:
-      - main
 jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
