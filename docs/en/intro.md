@@ -20,6 +20,7 @@ In a row-oriented DBMS, data is stored in rows, with all the values related to a
 
 In a column-oriented DBMS, data is stored in columns, with values from the same columns stored together.
 
+
 ## Why Column-Oriented Databases Work Better in the OLAP Scenario
 
 Column-oriented databases are better suited to OLAP scenarios: they are at least 100 times faster in processing most queries. The reasons are explained in detail below, but the fact is easier to demonstrate visually:
