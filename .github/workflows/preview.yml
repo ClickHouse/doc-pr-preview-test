@@ -35,7 +35,7 @@ jobs:
 
       - name: Report
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_WRITE_PR_COMMENTS }}
+          GITHUB_TOKEN: ${{ secrets.ROBOT_CLICKHOUSE_COMMIT_TOKEN }}
           PR: ${{ env.PR_NUMBER }}
         run: gh pr comment $PR --body "Preview is at ${{ env.VERCEL_URL }}"
 
