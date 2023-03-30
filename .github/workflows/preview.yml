@@ -8,6 +8,10 @@ jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
     steps:
+      - name: Get PR number
+        run: |
+          export PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV 
       - uses: actions/checkout@v3
       - name: Install Vercel CLI
         run: npm install --global vercel@canary
@@ -24,5 +28,15 @@ jobs:
           export NODE_OPTIONS="--max_old_space_size=4096"
           vercel build --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
-        
+        run: |
+          export VERCEL_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }})
+          echo "VERCEL_URL=$VERCEL_URL" >> $GITHUB_ENV
+          echo "VERCEL_URL=$VERCEL_URL" >> $GITHUB_STEP_SUMMARY
+
+      - name: Report
+        env:
+          GITHUB_TOKEN: ${{ secrets.ROBOT_CLICKHOUSE_COMMIT_TOKEN }}
+          PR: ${{ env.PR_NUMBER }}
+        run: gh pr comment $PR --body "Preview is at ${{ env.VERCEL_URL }}"
+
+
