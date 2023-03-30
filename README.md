@@ -80,7 +80,12 @@ Get this from the .vercel/project.json after running `vercel link`
 ### VERCEL_PROJECT_ID
 Get this from the .vercel/project.json after running `vercel link`
 
-### VERCEL_TOKEN
+### VERCEL_TOKEN_FOR_PREVIEWS
 NOTE: I renamed this to VERCEL_TOKEN_FOR_PREVIEWS and edited the workflow also
-Create this secret in Vercel, and add it to GitHub secrets. It is modified three times in the [workflow](https://github.com/ClickHouse/doc-pr-preview-test/blob/main/.github/workflows/preview.yml#L15)
+Create this secret in Vercel, and add it to GitHub secrets. It is modified three times in the workflow.
+
+## org secret
+
+### ROBOT_CLICKHOUSE_COMMIT_TOKEN
+Used to write a comment to the PR
 
