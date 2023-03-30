@@ -64,7 +64,11 @@ Auto-detected Project Settings (Docusaurus 2):
 
 4. Modify the workflow, since we need to grab the reference docs from the ClickHouse repo.  These are the lines I added:
 
-[mods](https://github.com/ClickHouse/doc-pr-preview-test/blob/main/.github/workflows/preview.yml#L16-L21)
+[mods to grab Reference Docs](https://github.com/ClickHouse/doc-pr-preview-test/blob/main/.github/workflows/preview.yml#L20-L25)
+
+[mods to get PR number to write report to](https://github.com/ClickHouse/doc-pr-preview-test/blob/main/.github/workflows/preview.yml#L11-L14)
+
+[mods to write report with URL to the PR](https://github.com/ClickHouse/doc-pr-preview-test/blob/main/.github/workflows/preview.yml#L30-L40)
 
 ## GitHub repo secrets
 
