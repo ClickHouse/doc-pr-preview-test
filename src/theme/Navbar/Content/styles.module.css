@@ -50,7 +50,8 @@
 
 .navbarItemsList {
   display: flex;
-  gap: 0.5rem;
+  gap: 2rem;
+  margin: 0 auto;
 }
 
 @media (max-width: 996px) {

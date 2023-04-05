@@ -120,7 +120,7 @@ const config = {
 					{
 						type: 'dropdown',
 						label: 'Product',
-						hoverable: false,
+						hoverable: true,
 						className: 'ch-menu',
 						position: 'left',
 						items: [
@@ -137,36 +137,7 @@ const config = {
 
 					{
 						type: 'dropdown',
-						hoverable: false,
-						label: 'Company',
-						className: 'ch-menu',
-						position: 'left',
-						items: [
-							{
-								label: 'Blog',
-								to: 'https://clickhouse.com/blog',
-							},
-							{
-								label: 'Our story',
-								to: 'https://clickhouse.com/company/our-story',
-							},
-							{
-								label: 'Careers',
-								to: 'https://clickhouse.com/company/careers',
-							},
-							{
-								label: 'Contact us',
-								to: 'https://clickhouse.com/company/contact',
-							},
-							{
-								label: 'News and events',
-								to: 'https://clickhouse.com/company/news-events',
-							},
-						],
-					},
-					{
-						type: 'dropdown',
-						hoverable: false,
+						hoverable: true,
 						label: 'Resources',
 						className: 'ch-menu',
 						position: 'left',
@@ -180,8 +151,16 @@ const config = {
 								to: 'https://clickhouse.com/learn',
 							},
 							{
+								label: 'Upcoming training',
+								to: 'https://clickhouse.com/company/news-events',
+							},
+							{
 								label: 'Blog',
 								to: 'https://clickhouse.com/blog',
+							},
+							{
+								label: 'Support Program',
+								to: 'https://clickhouse.com/support/program',
 							},
 						],
 					},
@@ -205,7 +184,7 @@ const config = {
                     Sign in
                   </a>
                   <a href="https://clickhouse.cloud/signUp" class="click-button-anchor">
-                    <button class="click-button primary-btn">Free Trial</button>
+                    <button class="click-button primary-btn">Get started</button>
                   </a>
                 </div>`,
 						position: 'right',
