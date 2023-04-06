@@ -2183,10 +2183,10 @@ const config = {
 						from: '/en/manage/security',
 						to: '/en/guides/sre/configuring-ldap',
 					},
-					{
-						from: '/en/manage/security/ip-egress-traffic-list',
-						to: '/en/manage/security/cloud-endpoints-api',
-					},
+					// {
+					// 	from: '/en/manage/security/ip-egress-traffic-list',
+					// 	to: '/en/manage/security/cloud-endpoints-api',
+					// },
 				],
 			},
 		],
