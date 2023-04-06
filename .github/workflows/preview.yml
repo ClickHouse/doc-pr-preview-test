@@ -13,8 +13,10 @@ jobs:
           export PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV 
       - uses: actions/checkout@v3
-      - name: Install Vercel CLI
-        run: npm install --global vercel@canary
+      - name: Install dependencies
+        run: |
+          npm install --global vercel@canary
+          npm install --global @redocly/cli
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
       - name: Download Reference Doc
@@ -27,7 +29,7 @@ jobs:
         run:  |
           export NODE_OPTIONS="--max_old_space_size=4096"
           vercel build --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
-          yarn generate-api-html
+         npx @redocly/cli build-docs  https://api.control-plane.clickhouse-staging.com/v1 --output .vercel/output/static/en/cloud/manage/clickhouse-cloud-api.html
       - name: Deploy Project Artifacts to Vercel
         run: |
           export VERCEL_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }})
