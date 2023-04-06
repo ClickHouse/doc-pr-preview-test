@@ -29,7 +29,7 @@ jobs:
         run:  |
           export NODE_OPTIONS="--max_old_space_size=4096"
           vercel build --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }}
-         npx @redocly/cli build-docs  https://api.control-plane.clickhouse-staging.com/v1 --output .vercel/output/static/en/cloud/manage/clickhouse-cloud-api.html
+          npx @redocly/cli build-docs https://api.control-plane.clickhouse-staging.com/v1 --output .vercel/output/static/en/cloud/manage/clickhouse-cloud-api.html
       - name: Deploy Project Artifacts to Vercel
         run: |
           export VERCEL_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_FOR_PREVIEWS }})
