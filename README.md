@@ -1,91 +1,46 @@
+[<img alt="ClickHouse — open source distributed column-oriented DBMS" width="400px" src="https://clickhouse.com/images/ch_gh_logo_rounded.png" />](https://clickhouse.com?utm_source=github)
+  <br/>
+  ClickHouse® is an open-source column-oriented database management system that allows generating analytical data reports in real-time.
+</p>
+
+<h1 align="center">
+  <a href="https://clickhouse.com/docs/">
+    ClickHouse Documentation
+  </a>
+</h1>
+
+<span align="center">
+  
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
+
+</span>
+
+ClickHouse is blazing fast, but understanding ClickHouse and using it effectively is a journey. The documentation is your source for gaining the knowledge you need to be successful with your ClickHouse projects and applications.
+
+## Highlights
+
+Some of the highlights of the ClickHouse docs include:
+
+- A **[Quick Start](https://clickhouse.com/docs/quick-start)** and **[Tutorial](https://clickhouse.com/docs/en/tutorial)** to get new users up and running quickly
+- A **[Connect a UI section](https://clickhouse.com/docs/en/connect-a-ui)** with guides on how to connect popular UI/BI tools to ClickHouse like Grafana, Metabase, Superset and Tableau
+- An **[Integrations section](https://clickhouse.com/docs/en/integrations)** of guides on how to connect ClickHouse to external systems like Kafka AWS S3, PostgreSQL, MySQL, Airbyte and much more
+- A **[User Guides section](https://clickhouse.com/docs/en/guides)** filled with articles, tutorials and how-to guides covering all sorts of fundamental and advanced ClickHouse topics, including how to choose a primary key, configure a replicated table, improve query performance, and lots of other helpful tips and tricks.
+- The historical docs can be found in the **[References section](https://clickhouse.com/docs/en)**, where you will find all the technical details like a complete ClickHouse SQL reference, a explanation of the various ClickHouse data types, instructions on how to build ClickHouse from the source code, the recent changelog, and much more.
+
+## How to Contribute
+
+We encourage and celebrate users of ClickHouse and providers of integrated platforms to contribute new articles and user guides. To contribute, simply create a pull request to this repo.
+
+If you are looking to submit changes or additions to the technical reference content (the pages under the **References** section of the docs website), that content can be found in the [ClickHouse](https://github.com/ClickHouse/ClickHouse/tree/master/docs/en) repository.
+
+To test your PR [build the docs locally](https://github.com/ClickHouse/clickhouse-docs/blob/main/contrib-writing-guide.md).
 
 ## License
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
 
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
-
-## Configuration
-
-### Work to be done in Vercel
-None, nada, zilch.  This is configured from the commandline.
-
-### Work to be done from your GitHub repository
-
-Check out your repo and then:
-
-1. Authenticate to Vercel
-```bash
-vercel login
-```
-
-You may be using SAML, or you may be using a different authentication method.  I am using SAML
-```bash
-Vercel CLI 28.18.2
-? Log in to Vercel saml
-```
-
-Look at your Vercel URL, mine ends in `/clickhouse`, so that is my slug.
-```bash
-? Enter your Team slug: clickhouse
-> Success! SAML Single Sign-On authentication complete for dan@roscigno.com
-Congratulations! You are now logged in. In order to deploy something, run `vercel`.
-💡  Connect your Git Repositories to deploy every branch push automatically (https://vercel.link/git).
-```
-
-2. Link this repo to Vercel
-
-Note: I am not linking from the Vercel web UI, I am linking from the repo to Vercel.  Vercel will not actually know anything about the workflow other than the fact that it is Docusaurus 2.
-```bash
-vercel link
-```
-
-Answer some questions, when asked if you want to link to an existing project say no and then it will offer to create a new one. I accepted all of the defaults, as I wanted Vercel to build a configuration for me that will work with Docusaurus 2.  If you look at your Vercel overview you will see that it populated the proper yarn commands for Docusaurus.  In the next section we will modify the workflow.
-```bash
-Vercel CLI 28.18.2
-? Set up “/work/Docs/doc-pr-preview-test”? [Y/n] y
-? Which scope should contain your project? ClickHouse
-? Link to existing project? [y/N] n
-? What’s your project’s name? doc-pr-preview-test
-? In which directory is your code located? ./
-Local settings detected in vercel.json:
-Auto-detected Project Settings (Docusaurus 2):
-- Build Command: docusaurus build
-- Development Command: docusaurus start --port $PORT
-- Install Command: `yarn install`, `pnpm install`, or `npm install`
-- Output Directory: build
-? Want to modify these settings? [y/N] n
-✅  Linked to clickhouse/doc-pr-preview-test (created .vercel and added it to .gitignore)
-```
-
-3. Add a preview.yml workflow.  Get this from github.com/vercel/examples/ci-cd/preview.yml
-
-[preview.yml](https://github.com/vercel/examples/blob/main/ci-cd/github-actions/.github/workflows/preview.yaml)
-
-4. Modify the workflow, since we need to grab the reference docs from the ClickHouse repo.  These are the lines I added:
-
-[mods to grab Reference Docs](https://github.com/ClickHouse/doc-pr-preview-test/blob/main/.github/workflows/preview.yml#L20-L25)
-
-4. Modify the workflow to add a comment to the PR with the preview URL.  These are the lines I added:
-
-[mods to get PR number to write report to](https://github.com/ClickHouse/doc-pr-preview-test/blob/main/.github/workflows/preview.yml#L11-L14)
-
-[mods to write report with URL to the PR](https://github.com/ClickHouse/doc-pr-preview-test/blob/main/.github/workflows/preview.yml#L30-L40)
-
-## GitHub repo secrets
-
-### VERCEL_ORG_ID
-Get this from the .vercel/project.json after running `vercel link`
-
-### VERCEL_PROJECT_ID
-Get this from the .vercel/project.json after running `vercel link`
-
-### VERCEL_TOKEN_FOR_PREVIEWS
-NOTE: I renamed this to VERCEL_TOKEN_FOR_PREVIEWS and edited the workflow also
-Create this secret in Vercel, and add it to GitHub secrets. It is modified three times in the workflow.
-
-## org secret
-
-### ROBOT_CLICKHOUSE_COMMIT_TOKEN
-Used to write a comment to the PR
-
