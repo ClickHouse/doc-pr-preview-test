@@ -4,6 +4,7 @@ sidebar_position: 4
 slug: /en/integrations/gcs
 description: "Google Cloud Storage (GCS) Backed MergeTree"
 ---
+import BucketDetails from '@site/docs/en/_snippets/_GCS_authentication_and_bucket.md';
 
 # Integrate Google Cloud Storage with ClickHouse
 
@@ -218,27 +219,13 @@ Place `chnode1` in one GCP region, and `chnode2` in a second.  In this guide `us
 Do not start `clickhouse server` until after it is configured.  Just install it.
 :::
 
-Refer to the [installation instructions](/docs/en/getting-started/install.md/#available-installation-options) when performing the deployment steps on the ClickHouse server nodes and ClickHouse Keeper nodes.
+Refer to the [installation instructions](/docs/en/getting-started/install.md/#available-installation-options) when performing the deployment steps on the ClickHouse server nodes.
 
 #### Deploy ClickHouse Keeper
 
 Deploy ClickHouse Keeper on three hosts, in the sample configurations these are named `keepernode1`, `keepernode2`, and `keepernode3`.  `keepernode1` can be deployed in the same region as `chnode1`, `keepernode2` with `chnode2`, and `keepernode3` in either region, but in a different availability zone from the ClickHouse node in that region.
 
-Refer to the [installation instructions](/docs/en/getting-started/install.md/#available-installation-options) when performing the deployment steps on the ClickHouse server nodes and ClickHouse Keeper nodes.
-
-:::note
-ClickHouse Keeper is installed in the same way as ClickHouse, as it can be run with ClickHouse server, or standalone.  Running Keeper standalone gives more flexibility when scaling out or upgrading.
-:::
-
-Once you deploy ClickHouse on the three Keeper nodes run these commands to prep the directories for configuration and operation in standalone mode:
-
-```bash
-sudo mkdir /etc/clickhouse-keeper
-sudo chown clickhouse:clickhouse /etc/clickhouse-keeper
-sudo chmod 700 /etc/clickhouse-keeper
-sudo mkdir -p /var/lib/clickhouse/coordination
-sudo chown -R clickhouse:clickhouse /var/lib/clickhouse
-```
+Refer to the [installation instructions](/docs/en/getting-started/install.md/#install-standalone-clickhouse-keeper) when performing the deployment steps on the ClickHouse Keeper nodes.
 
 ### Create two buckets
 
@@ -246,57 +233,28 @@ The two ClickHouse servers will be located in different regions for high availab
 
 In **Cloud Storage > Buckets** choose **CREATE BUCKET**. For this tutorial two buckets are created, one in each of `us-east1` and `us-east4`.  The buckets are single region, standard storage class, and not public.  When prompted, enable public access prevention.  Do not create folders, they will be created when ClickHouse writes to the storage.
 
-#### ch_bucket_us_east1
+If you need step-by-step instructions to create buckets and an HMAC key, then expand **Create GCS buckets and an HMAC key** and follow along:
 
-![Add a bucket](@site/docs/en/integrations/data-ingestion/s3/images/GCS-bucket-1.png)
-
-#### ch_bucket_us_east4
-
-![Add a bucket](@site/docs/en/integrations/data-ingestion/s3/images/GCS-bucket-2.png)
-
-### Generate an Access key
-
-#### Create a service account HMAC key and secret
-
-Open **Cloud Storage > Settings > Interoperability** and either choose an existing **Access key**, or **CREATE A KEY FOR A SERVICE ACCOUNT**.  This guide covers the path for creating a new key for a new service account.
-
-![Add a bucket](@site/docs/en/integrations/data-ingestion/s3/images/GCS-create-a-service-account-key.png)
-
-#### Add a new service account
-
-If this is a project with no existing service account, **CREATE NEW ACCOUNT**.
-
-![Add a bucket](@site/docs/en/integrations/data-ingestion/s3/images/GCS-create-service-account-0.png)
-
-There are three steps to creating the service account, in the first step give the account a meaningful name, ID, and description.
-
-![Add a bucket](@site/docs/en/integrations/data-ingestion/s3/images/GCS-create-service-account-a.png)
-
-In the Interoperability settings dialog the IAM role **Storage Object Admin** role is recommended; select that role in step two.
-
-![Add a bucket](@site/docs/en/integrations/data-ingestion/s3/images/GCS-create-service-account-2.png)
-
-Step three is optional and not used in this guide.  You may allow users to have these privileges based on your policies.
-
-![Add a bucket](@site/docs/en/integrations/data-ingestion/s3/images/GCS-create-service-account-3.png)
-
-The service account HMAC key will be displayed.  Save this information, as it will be used in the ClickHouse configuration.
-
-![Add a bucket](@site/docs/en/integrations/data-ingestion/s3/images/GCS-guide-key.png)
-
+<BucketDetails />
 
 ### Configure ClickHouse Keeper
 
 All of the ClickHouse Keeper nodes have the same configuration file except for the `server_id` line (first highlighted line below).  Modify the file with the hostnames for your ClickHouse Keeper servers, and on each of the servers set the `server_id` to match the appropriate `server` entry in the `raft_configuration`.  Since this example has `server_id` set to `3`, we have highlighted the matching lines in the `raft_configuration`.
 
 - Edit the file with your hostnames, and make sure that they resolve from the ClickHouse server nodes and the Keeper nodes
-- Copy the file into place (`/etc/clickhouse-keeper/keeper-config.xml` on each of the Keeper servers
+- Copy the file into place (`/etc/clickhouse-keeper/keeper_config.xml` on each of the Keeper servers
 - Edit the `server_id` on each machine, based on its entry number in the `raft_configuration`
 
-```xml title=/etc/clickhouse-keeper/keeper-config.xml
+```xml title=/etc/clickhouse-keeper/keeper_config.xml
 <clickhouse>
+    <logger>
+        <level>trace</level>
+        <log>/var/log/clickhouse-keeper/clickhouse-keeper.log</log>
+        <errorlog>/var/log/clickhouse-keeper/clickhouse-keeper.err.log</errorlog>
+        <size>1000M</size>
+        <count>3</count>
+    </logger>
     <listen_host>0.0.0.0</listen_host>
-
     <keeper_server>
         <tcp_port>9181</tcp_port>
 <!--highlight-next-line-->
@@ -332,7 +290,6 @@ All of the ClickHouse Keeper nodes have the same configuration file except for t
     </keeper_server>
 </clickhouse>
 ```
-
 
 ### Configure ClickHouse Server
 
@@ -467,9 +424,14 @@ These substitutions are common across the two nodes:
 
 ### Start ClickHouse Keeper
 
+Use the commands for your operating system, for example:
+
 ```bash
-sudo -u clickhouse clickhouse-keeper --config-file=/etc/clickhouse-keeper/keeper-config.xml --daemon
+sudo systemctl enable clickhouse-keeper
+sudo systemctl start clickhouse-keeper
+sudo systemctl status clickhouse-keeper
 ```
+
 #### Check ClickHouse Keeper status
 
 Send commands to the ClickHouse Keeper with `netcat`.  For example, `mntr` returns the state of the ClickHouse Keeper cluster.  If you run the command on each of the Keeper nodes you will see that one is a leader, and the other two are followers:

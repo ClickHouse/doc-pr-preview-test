@@ -468,7 +468,7 @@ Any settings changes should be tested. We recommend monitoring Kafka consumer la
 
 Aside from the settings discussed above, the following may be of interest:
 
-* [Kafka_max_wait_ms](../../../operations/settings/settings.md#kafka-max-wait-ms) -  The wait time in milliseconds for reading messages from Kafka before retry. Set at a user profile level and defaults to 5000.
+* [Kafka_max_wait_ms](../../../operations/settings/settings.md#kafka-max-wait-ms) - The wait time in milliseconds for reading messages from Kafka before retry. Set at a user profile level and defaults to 5000.
 
 [All settings ](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md)from the underlying librdkafka can also be placed in the ClickHouse configuration files inside a _kafka_ element - setting names should be XML elements with periods replaced with underscores e.g.
 
@@ -683,7 +683,8 @@ SELECT count() FROM default.github;
 
 ## ClickHouse Kafka Connect Sink
 :::note
-The connector is available in beta stage for early adopters. If you notice a problem, please [file an issue.](https://github.com/ClickHouse/clickhouse-kafka-connect/issues/new)
+The connector is available in beta stage for early adopters.
+If you need any help, please [file an issue in the repository](https://github.com/ClickHouse/clickhouse-kafka-connect/issues) or raise a question in [ClickHouse public Slack](https://clickhouse.com/slack).
 :::
 **ClickHouse Kafka Connect Sink** is the Kafka connector delivering data from a Kafka topic to a ClickHouse table.
 
